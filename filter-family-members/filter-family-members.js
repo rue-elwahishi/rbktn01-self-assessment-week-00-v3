@@ -13,36 +13,36 @@
 //
 // EXAMPLE:
 //
-// var familyTree = {
-//   'firstName': 'Beth',
-//   'lastName': 'Johnson',
-//   'location': 'San Francisco',
-//   'children': [
-//     {
-//       'firstName': 'Beth Jr.',
-//       'lastName': 'Johnson',
-//       'location': 'Berkeley',
-//       'children': [
-//         {
-//           'firstName': 'Smitty',
-//           'lastName': 'Won',
-//           'location': 'Beijing',
-//           'children': []
-//         }
-//       ]
-//     },
-//     {
-//       'firstName': 'Joshie',
-//       'lastName': 'Wyattson',
-//       'location': 'Berkeley',
-//       'children': []
-//     }
-//   ]
-// };
-//
-// var livesInBerkeley = function (familyMember) {
-//   return familyMember.location === 'Berkeley';
-// }
+var familyTree = {
+  'firstName': 'Beth',
+  'lastName': 'Johnson',
+  'location': 'San Francisco',
+  'children': [
+    {
+      'firstName': 'Beth Jr.',
+      'lastName': 'Johnson',
+      'location': 'Berkeley',
+      'children': [
+        {
+          'firstName': 'Smitty',
+          'lastName': 'Won',
+          'location': 'Beijing',
+          'children': []
+        }
+      ]
+    },
+    {
+      'firstName': 'Joshie',
+      'lastName': 'Wyattson',
+      'location': 'Berkeley',
+      'children': []
+    }
+  ]
+    };
+
+var livesInBerkeley = function (familyMember) {
+   return familyMember.location === 'Berkeley';
+  }
 //
 // filterFamilyMembers(familyTree, livesInBerkeley)
 //
@@ -51,24 +51,18 @@
 
 
 var filterFamilyMembers = function (familyTree, truthTest) {
-   
-   for (var key in familyTree){
-   	if(Array.isArray(familyTree[key])){
-      for(var i = 0; i < familyTree[key].length; i++){
-      	if(typeof familyTree[key][i] === 'object'){
-      	  for (var j in familyTree[key][i]){
-      	  	if (familyTree[key][i][j].location === truthTest){
-      	  		filterFamilyMembers(familyTree[key]);
-      	  	}
-      	  }
-      	}
-      }
-   	}
-   	else if (Array.isArray(familyTree[key]) === []){
-   		filterFamilyMembers(familyTree[key]);
-   	}
+   var arr = [];
+   tested(familyTree);
 
- }
-  return familyTree[key][i][j];
+  function tested(familyTree){
+   if (truthTest(familyTree)){
+      arr.push(familyTree.firstName + familyTree.lastName);
+   } 
+  
+   for ( var i in familyTree.children){
+     tested(familyTree.children[i]);
+   }
 };
+return arr;
+} 
 
