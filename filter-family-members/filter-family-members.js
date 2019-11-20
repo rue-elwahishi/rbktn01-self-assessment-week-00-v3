@@ -51,6 +51,24 @@
 
 
 var filterFamilyMembers = function (familyTree, truthTest) {
-  // All your code in this function body
+   
+   for (var key in familyTree){
+   	if(Array.isArray(familyTree[key])){
+      for(var i = 0; i < familyTree[key].length; i++){
+      	if(typeof familyTree[key][i] === 'object'){
+      	  for (var j in familyTree[key][i]){
+      	  	if (familyTree[key][i][j].location === truthTest){
+      	  		filterFamilyMembers(familyTree[key]);
+      	  	}
+      	  }
+      	}
+      }
+   	}
+   	else if (Array.isArray(familyTree[key]) === []){
+   		filterFamilyMembers(familyTree[key]);
+   	}
+
+ }
+  return familyTree[key][i][j];
 };
 
